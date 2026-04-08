@@ -19,9 +19,9 @@ type SortOption = "trending" | "newest" | "oldest";
 const SORT_OPTIONS: SortOption[] = ["trending", "newest", "oldest"];
 
 const SORT_LABELS: Record<SortOption, string> = {
-  trending: "Trending",
-  newest: "Newest first",
-  oldest: "Oldest first",
+  trending: "Популярные",
+  newest: "Сначала новые",
+  oldest: "Сначала старые",
 };
 
 const PAGE_SIZE = 24;
@@ -29,15 +29,15 @@ const PAGE_SIZE = 24;
 function relativeTime(iso: string): string {
   const diff = Date.now() - new Date(iso).getTime();
   const s = Math.floor(diff / 1000);
-  if (s < 60) return "just now";
+  if (s < 60) return "только что";
   const m = Math.floor(s / 60);
-  if (m < 60) return `${m}m ago`;
+  if (m < 60) return `${m} мин. назад`;
   const h = Math.floor(m / 60);
-  if (h < 24) return `${h}h ago`;
+  if (h < 24) return `${h} ч. назад`;
   const d = Math.floor(h / 24);
-  if (d < 30) return `${d}d ago`;
+  if (d < 30) return `${d} дн. назад`;
   const mo = Math.floor(d / 30);
-  return `${mo}mo ago`;
+  return `${mo} мес. назад`;
 }
 
 type LibraryPageProps = {
@@ -160,15 +160,15 @@ export function LibraryPage({ initialData, initialTotal }: LibraryPageProps) {
             <div className="absolute inset-0 translate-x-1.5 translate-y-1.5 rounded-lg bg-zinc-900" />
             <div className="relative z-10 rounded-lg border-[3px] border-zinc-900 bg-[#d31611] px-4 py-1">
               <span className="text-sm font-bold text-white">
-                {total.toLocaleString()}+ prompts
+                {total.toLocaleString()}+ промптов
               </span>
             </div>
           </div>
           <h1 className="text-5xl font-extrabold tracking-tighter sm:text-6xl">
-            Prompt Library
+            Библиотека промптов
           </h1>
           <p className="max-w-lg text-lg text-zinc-600">
-            Reverse-engineered prompts from real GitHub repositories.
+            Реверс-промпты из реальных GitHub-репозиториев.
           </p>
         </div>
 
@@ -197,7 +197,7 @@ export function LibraryPage({ initialData, initialTotal }: LibraryPageProps) {
                 type="search"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                placeholder="Search repos or prompts…"
+                placeholder="Поиск по репозиториям и промптам…"
                 className="w-full bg-transparent px-3 py-3 text-base text-zinc-900 placeholder-zinc-500 focus:outline-none"
               />
               {isPending && (
@@ -261,19 +261,19 @@ export function LibraryPage({ initialData, initialTotal }: LibraryPageProps) {
               <span className="font-semibold text-zinc-900">
                 {total.toLocaleString()}
               </span>{" "}
-              result{total !== 1 ? "s" : ""} for &ldquo;{search}&rdquo;
+              {total === 1 ? "результат" : "результатов"} по запросу &laquo;{search}&raquo;
             </>
           ) : (
             <>
-              Showing{" "}
+              Показано{" "}
               <span className="font-semibold text-zinc-900">
                 {entries.length.toLocaleString()}
               </span>{" "}
-              of{" "}
+              из{" "}
               <span className="font-semibold text-zinc-900">
                 {total.toLocaleString()}
               </span>{" "}
-              prompts
+              промптов
             </>
           )}
         </p>
@@ -282,8 +282,8 @@ export function LibraryPage({ initialData, initialTotal }: LibraryPageProps) {
         {entries.length === 0 ? (
           <div className="flex flex-col items-center gap-3 py-24 text-center">
             <span className="text-4xl">∅</span>
-            <p className="text-lg font-semibold text-zinc-700">No prompts found</p>
-            <p className="text-zinc-500">Try a different search term.</p>
+            <p className="text-lg font-semibold text-zinc-700">Промпты не найдены</p>
+            <p className="text-zinc-500">Попробуйте другой поисковый запрос.</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -325,10 +325,10 @@ export function LibraryPage({ initialData, initialTotal }: LibraryPageProps) {
                       d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                     />
                   </svg>
-                  Loading…
+                  Загрузка…
                 </>
               ) : (
-                <>Load {Math.min(PAGE_SIZE, total - entries.length)} more ↓</>
+                <>Загрузить ещё {Math.min(PAGE_SIZE, total - entries.length)} ↓</>
               )}
             </button>
           </div>
@@ -429,7 +429,7 @@ function PromptCard({ entry }: { entry: PromptEntry }) {
               <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
             </svg>
             {(entry.views ?? 0).toLocaleString()}{" "}
-            {(entry.views ?? 0) === 1 ? "view" : "views"}
+            {(entry.views ?? 0) === 1 ? "просмотр" : "просмотров"}
           </span>
         </div>
       </div>

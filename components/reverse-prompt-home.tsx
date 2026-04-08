@@ -131,7 +131,7 @@ export function ReversePromptHome({
               href="/library"
               className="font-semibold text-zinc-900 transition-transform hover:-translate-y-0.5"
             >
-              Library
+              Библиотека
             </Link>
             <a
               href="https://github.com/filiksyos/gitreverse"
@@ -204,15 +204,15 @@ export function ReversePromptHome({
             </svg>
 
             <h1 className="text-5xl font-extrabold tracking-tighter sm:text-6xl lg:text-7xl">
-              Repository to
+              Репозиторий в
               <br />
-              Prompt
+              Промпт
             </h1>
             <p className="mt-4 max-w-xl text-lg text-zinc-600">
-              Paste a public GitHub repo link or{" "}
-              <span className="whitespace-nowrap">owner/repo</span>. We&apos;ll
-              turn it into one plain-language &ldquo;vibe coding&rdquo; prompt
-              you could have used to build it.
+              Вставьте ссылку на публичный GitHub-репозиторий или{" "}
+              <span className="whitespace-nowrap">owner/repo</span>. Мы
+              превратим его в промпт для вайб-кодинга, с помощью которого можно
+              воссоздать этот проект.
             </p>
           </div>
 
@@ -230,7 +230,7 @@ export function ReversePromptHome({
                     name="repoUrl"
                     autoComplete="off"
                     className="relative z-10 w-full rounded border-[3px] border-zinc-900 bg-white px-4 py-3 text-base text-zinc-900 placeholder-zinc-500 focus:outline-none"
-                    placeholder="https://github.com/… or owner/repo"
+                    placeholder="https://github.com/… или owner/repo"
                     value={repoUrl}
                     onChange={(e) => setRepoUrl(e.target.value)}
                     required
@@ -269,10 +269,10 @@ export function ReversePromptHome({
                             d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                           />
                         </svg>
-                        <span>Processing…</span>
+                        <span>Обработка…</span>
                       </>
                     ) : (
-                      "Get Prompt"
+                      "Получить промпт"
                     )}
                   </button>
                 </div>
@@ -280,7 +280,7 @@ export function ReversePromptHome({
 
               <div className="mt-4 flex flex-wrap gap-2">
                 <span className="w-full text-sm text-zinc-600">
-                  Try example repos:
+                  Примеры репозиториев:
                 </span>
                 {HOME_EXAMPLES.map(({ label, url }) => (
                   <div key={url} className="group relative">
@@ -298,14 +298,14 @@ export function ReversePromptHome({
 
               {rateLimited ? (
                 <div className="mt-4 rounded-lg border-[3px] border-amber-400 bg-amber-50 p-4" role="alert">
-                  <p className="font-semibold text-amber-900">Sorry, we&apos;re a bit overwhelmed right now.</p>
+                  <p className="font-semibold text-amber-900">Извините, сейчас слишком много запросов.</p>
                   <div className="mt-3 flex flex-wrap gap-2">
-                    <p className="w-full text-sm text-amber-800">Come back in a couple of hours, or check out what others have already generated:</p>
+                    <p className="w-full text-sm text-amber-800">Попробуйте через пару часов или посмотрите, что уже сгенерировали другие:</p>
                     <Link
                       href="/library"
                       className="inline-flex items-center gap-1.5 rounded border-[2px] border-amber-600 bg-amber-100 px-3 py-1.5 text-sm font-semibold text-amber-900 transition-colors hover:bg-amber-200"
                     >
-                      Browse the library
+                      Открыть библиотеку
                       <svg className="h-3.5 w-3.5" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                         <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                       </svg>
@@ -320,15 +320,15 @@ export function ReversePromptHome({
             </form>
           </div>
           <p className="text-center text-sm text-zinc-500">
-            You can also replace{" "}
+            Также можно заменить{" "}
             <code className="rounded bg-zinc-100 px-1 py-0.5 font-mono text-xs text-zinc-700">
               hub
             </code>{" "}
-            with{" "}
+            на{" "}
             <code className="rounded bg-zinc-100 px-1 py-0.5 font-mono text-xs text-zinc-700">
               reverse
             </code>{" "}
-            in any GitHub URL.
+            в любом GitHub URL.
           </p>
           </div>
         </div>
@@ -346,7 +346,7 @@ export function ReversePromptHome({
                 <section className="relative z-10 rounded-xl border-[3px] border-zinc-900 bg-[#e8f5e9] p-6">
                   <div className="mb-3 flex flex-wrap items-center justify-between gap-3">
                     <h2 className="text-sm font-semibold text-zinc-700">
-                      What is this project?
+                      Что это за проект?
                     </h2>
                     {reverseEngineeredRepo ? (
                       <a
@@ -389,7 +389,7 @@ export function ReversePromptHome({
               <section className="relative z-10 rounded-xl border-[3px] border-zinc-900 bg-[#fafafa] p-6">
                 <div className="mb-3 flex flex-wrap items-center justify-between gap-3">
                   <h2 className="text-sm font-semibold text-zinc-700">
-                    Vibe coding prompt
+                    Промпт для вайб-кодинга
                   </h2>
                   <div className="flex shrink-0 flex-wrap items-center justify-end gap-2">
                     {!explanation && reverseEngineeredRepo ? (
@@ -426,7 +426,7 @@ export function ReversePromptHome({
                         onClick={copyPrompt}
                         className="relative z-10 rounded border-[3px] border-zinc-900 bg-[#ffc480] px-3 py-1.5 text-xs font-medium text-zinc-900 transition-transform group-hover:-translate-x-px group-hover:-translate-y-px"
                       >
-                        {copied ? "Copied!" : "Copy prompt"}
+                        {copied ? "Скопировано!" : "Скопировать"}
                       </button>
                     </div>
                   </div>

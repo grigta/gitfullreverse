@@ -16,7 +16,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "GitFullReverse",
   description:
-    "Turn a GitHub repository into a plain-language coding agent prompt.",
+    "Превратите GitHub-репозиторий в промпт для AI-кодинга.",
 };
 
 export default function RootLayout({
@@ -26,7 +26,7 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="en"
+      lang="ru"
       className={`${geistSans.variable} ${geistMono.variable} h-full bg-[#fffdf8] antialiased`}
     >
       <body className="min-h-full flex flex-col">
