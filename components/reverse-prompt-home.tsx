@@ -319,17 +319,6 @@ export function ReversePromptHome({
               ) : null}
             </form>
           </div>
-          <p className="text-center text-sm text-zinc-500">
-            Также можно заменить{" "}
-            <code className="rounded bg-zinc-100 px-1 py-0.5 font-mono text-xs text-zinc-700">
-              hub
-            </code>{" "}
-            на{" "}
-            <code className="rounded bg-zinc-100 px-1 py-0.5 font-mono text-xs text-zinc-700">
-              reverse
-            </code>{" "}
-            в любом GitHub URL.
-          </p>
           </div>
         </div>
 
