@@ -3,6 +3,7 @@ import { SYSTEM_PROMPT } from "@/lib/system-prompt";
 import { getFileTree, getReadme, getRepoMeta } from "@/lib/github-client";
 import { formatAsFilteredTree } from "@/lib/file-tree-formatter";
 import { parseGitHubRepoInput } from "@/lib/parse-github-repo";
+import { parseSections } from "@/lib/parse-sections";
 import { getSupabase } from "@/lib/supabase";
 
 const README_MAX_CHARS = 8000;
@@ -41,7 +42,7 @@ function resolveLlmTarget(): LlmTarget | { error: string } {
   };
 }
 
-const inFlight = new Map<string, Promise<{ prompt: string } | NextResponse>>();
+const inFlight = new Map<string, Promise<{ explanation: string; prompt: string } | NextResponse>>();
 
 function buildUserMessage(
   owner: string,
@@ -182,7 +183,7 @@ export async function POST(request: NextRequest) {
     const out = await existing;
     return out instanceof NextResponse
       ? out
-      : NextResponse.json({ prompt: out.prompt }, { status: 200 });
+      : NextResponse.json({ explanation: out.explanation, prompt: out.prompt }, { status: 200 });
   }
 
   const promise = (async () => {
@@ -202,7 +203,8 @@ export async function POST(request: NextRequest) {
             const ageHours =
               (Date.now() - new Date(data.cached_at).getTime()) / 36e5;
             if (ageHours < ttlHours) {
-              return { prompt: data.prompt as string };
+              const cached = parseSections(data.prompt as string);
+              return { explanation: cached.explanation, prompt: cached.prompt };
             }
           }
           // Entry exists but is stale — keep as fallback
@@ -320,7 +322,8 @@ export async function POST(request: NextRequest) {
 
       if (creditsExhausted) {
         if (stalePrompt) {
-          return { prompt: stalePrompt };
+          const stale = parseSections(stalePrompt);
+          return { explanation: stale.explanation, prompt: stale.prompt };
         }
         return NextResponse.json(
           { error: "Service is currently over capacity. Try again later." },
@@ -347,13 +350,15 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const prompt = extractMessage(data);
-    if (!prompt) {
+    const rawMessage = extractMessage(data);
+    if (!rawMessage) {
       return NextResponse.json(
         { error: "Model did not return a usable text response." },
         { status: 500 }
       );
     }
+
+    const { explanation, prompt } = parseSections(rawMessage);
 
     const sb = getSupabase();
     if (sb) {
@@ -363,7 +368,7 @@ export async function POST(request: NextRequest) {
           {
             owner,
             repo,
-            prompt,
+            prompt: rawMessage,
             cached_at: new Date().toISOString(),
           },
           { onConflict: "owner,repo" }
@@ -378,7 +383,7 @@ export async function POST(request: NextRequest) {
         });
     }
 
-    return { prompt };
+    return { explanation, prompt };
   })();
 
   inFlight.set(key, promise);
@@ -386,7 +391,7 @@ export async function POST(request: NextRequest) {
     const out = await promise;
     return out instanceof NextResponse
       ? out
-      : NextResponse.json({ prompt: out.prompt }, { status: 200 });
+      : NextResponse.json({ explanation: out.explanation, prompt: out.prompt }, { status: 200 });
   } finally {
     inFlight.delete(key);
   }

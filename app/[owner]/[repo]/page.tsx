@@ -4,6 +4,7 @@ import { ReversePromptHome } from "@/components/reverse-prompt-home";
 import { isHomeExampleRepo } from "@/lib/home-example-repos";
 import { isValidGitHubRepoPath, normalizeRepoSegment } from "@/lib/parse-github-repo";
 import { getSupabase } from "@/lib/supabase";
+import { parseSections } from "@/lib/parse-sections";
 
 type PageProps = {
   params: Promise<{ owner: string; repo: string }>;
@@ -23,6 +24,7 @@ export default async function RepoPage({ params }: PageProps) {
   const initialRepoInput = `${owner}/${repoNorm}`;
 
   let cachedPrompt: string | undefined;
+  let cachedExplanation: string | undefined;
   try {
     const supabase = getSupabase();
     if (supabase) {
@@ -42,7 +44,9 @@ export default async function RepoPage({ params }: PageProps) {
         .eq("repo", repoNorm)
         .maybeSingle();
       if (data?.prompt) {
-        cachedPrompt = data.prompt as string;
+        const parsed = parseSections(data.prompt as string);
+        cachedPrompt = parsed.prompt;
+        cachedExplanation = parsed.explanation || undefined;
       }
     }
   } catch {
@@ -54,6 +58,7 @@ export default async function RepoPage({ params }: PageProps) {
       initialRepoInput={initialRepoInput}
       autoSubmit={!cachedPrompt}
       initialPrompt={cachedPrompt}
+      initialExplanation={cachedExplanation}
     />
   );
 }

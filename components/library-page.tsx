@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef, useState, useTransition } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { parseSections } from "@/lib/parse-sections";
 
 type PromptEntry = {
   id: number;
@@ -366,10 +367,12 @@ export function LibraryPage({ initialData, initialTotal }: LibraryPageProps) {
 function PromptCard({ entry }: { entry: PromptEntry }) {
   const router = useRouter();
   const href = `/${encodeURIComponent(entry.owner)}/${encodeURIComponent(entry.repo)}`;
+  const { explanation, prompt } = parseSections(entry.prompt);
+  const previewText = explanation || prompt;
   const truncated =
-    entry.prompt.length > 160
-      ? entry.prompt.slice(0, 160).trimEnd() + "…"
-      : entry.prompt;
+    previewText.length > 160
+      ? previewText.slice(0, 160).trimEnd() + "…"
+      : previewText;
 
   return (
     <div
