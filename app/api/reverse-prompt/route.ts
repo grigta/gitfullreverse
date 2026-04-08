@@ -6,7 +6,7 @@ import { parseGitHubRepoInput } from "@/lib/parse-github-repo";
 import { parseSections } from "@/lib/parse-sections";
 import { getSupabase } from "@/lib/supabase";
 
-const README_MAX_CHARS = 8000;
+const README_MAX_CHARS = 16000;
 const OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions";
 const GOOGLE_AI_STUDIO_URL =
   "https://generativelanguage.googleapis.com/v1beta/openai/chat/completions";
@@ -243,7 +243,7 @@ export async function POST(request: NextRequest) {
       tree.tree,
       `${owner}/${repo}`,
       undefined,
-      1
+      3
     );
 
     const userContent = buildUserMessage(

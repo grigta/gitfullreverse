@@ -126,6 +126,7 @@ export function LibraryPage({ initialData, initialTotal }: LibraryPageProps) {
             className="text-xl font-bold tracking-tight hover:opacity-80 transition-opacity"
           >
             <span className="text-zinc-900">Git</span>
+            <span className="text-[#5CF1A4]">Full</span>
             <span className="text-[#d31611]">Reverse</span>
           </Link>
           <a

@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "GitReverse",
+  title: "GitFullReverse",
   description:
     "Turn a GitHub repository into a plain-language coding agent prompt.",
 };

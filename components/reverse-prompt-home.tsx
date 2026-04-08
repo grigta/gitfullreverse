@@ -123,6 +123,7 @@ export function ReversePromptHome({
         <div className="mx-auto flex h-16 max-w-4xl items-center justify-between px-4 sm:px-6">
           <span className="text-xl font-bold tracking-tight">
             <span className="text-zinc-900">Git</span>
+            <span className="text-[#5CF1A4]">Full</span>
             <span className="text-[#d31611]">Reverse</span>
           </span>
           <div className="flex items-center gap-4">
