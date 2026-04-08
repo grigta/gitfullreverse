@@ -34,6 +34,10 @@ Write **one synthetic user message**: the kind of prompt a **non-technical or li
 - **Length:** about **120 to 200 words**.
 - **Tone:** natural and conversational. No preamble, no meta, no filler.
 
+## Language
+
+**Always respond in Russian.** All section headers, descriptions, and explanations must be in Russian. Technical terms (names of frameworks, libraries, tools, file names, env vars) keep in their original English form.
+
 ## What to avoid (both sections)
 
 - Inventing features not supported by the evidence in the context.
